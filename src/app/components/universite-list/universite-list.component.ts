@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Universite } from 'src/app/models/universite';
-
 import { UniversiteService } from 'src/app/services/universite.service';
-
-
 
 @Component({
   selector: 'app-universite-list',
@@ -13,23 +10,23 @@ import { UniversiteService } from 'src/app/services/universite.service';
 })
 export class UniversiteListComponent implements OnInit {
   universite: Universite = {
-    idUniversite: null, // Si nécessaire, sinon omettez-le
+    idUniversite: null,
     nomUniversite: '',
     adresse: '',
-    foyer: null // Ajustez selon le modèle
+    foyer: null
   };
   universites: Universite[] = [];
+  isEditing: boolean = false;
+
   constructor(private universiteService: UniversiteService, private router: Router) {}
+
   ngOnInit(): void {
     this.universiteService.getUniversites().subscribe((data) => {
       this.universites = data;
-      console.log(data);
     });
-  
-
   }
+
   deleteUniversite(idUniversite: number): void {
-    console.log('ID de l\'université à supprimer:', idUniversite); // Ajoutez cette ligne pour déboguer
     if (confirm("Êtes-vous sûr de vouloir supprimer cette université ?")) {
       this.universiteService.deleteUniversite(idUniversite).subscribe(() => {
         this.universites = this.universites.filter(u => u.idUniversite !== idUniversite);
@@ -38,18 +35,44 @@ export class UniversiteListComponent implements OnInit {
       });
     }
   }
-  updateUniversite(universite: Universite): void {
-    // Redirige vers un formulaire de mise à jour
-    this.router.navigate(['/update-universite', universite.idUniversite]);
+
+  editUniversite(universite: Universite): void {
+    this.isEditing = true;
+    this.universite = { ...universite }; // Clone pour éviter les modifications directes
   }
+
+  onUpdate(): void {
+    if (this.universite.idUniversite) {
+      this.universiteService.updateUniversite(this.universite).subscribe(
+        (response) => {
+          // Met à jour la liste sans recharger
+          const index = this.universites.findIndex(u => u.idUniversite === this.universite.idUniversite);
+          if (index > -1) {
+            this.universites[index] = response;
+          }
+          this.isEditing = false;
+          this.universite = { idUniversite: null, nomUniversite: '', adresse: '', foyer: null };
+        },
+        (error) => {
+          console.error('Erreur lors de la mise à jour :', error);
+        }
+      );
+    }
+  }
+
+  cancelEdit(): void {
+    this.isEditing = false;
+    this.universite = { idUniversite: null, nomUniversite: '', adresse: '', foyer: null };
+  }
+
   onSubmit(): void {
     this.universiteService.addUniversite(this.universite).subscribe(
       (response) => {
-        console.log('Université ajoutée:', response);
-        // Ajouter une action, comme rediriger l'utilisateur ou afficher un message de succès
+        this.universites.push(response);
+        this.universite = { idUniversite: null, nomUniversite: '', adresse: '', foyer: null };
       },
       (error) => {
-        console.error('Erreur lors de l\'ajout:', error);
+        console.error('Erreur lors de l\'ajout :', error);
       }
     );
   }
