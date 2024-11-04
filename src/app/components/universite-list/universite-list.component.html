@@ -1,0 +1,30 @@
+<div class="container">
+    <h2>Liste des Universités</h2>
+    
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Adresse</th>
+          <th>Actions</th> <!-- Nouvelle colonne pour les actions -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let universite of universites">
+          <td>{{ universite.idUniversite }}</td>
+          <td>{{ universite.nomUniversite }}</td>
+          <td>{{ universite.adresse }}</td>
+          <td>
+            <button (click)="updateUniversite(universite)" class="btn btn-primary">Modifier</button>
+            <button (click)="deleteUniversite(universite.idUniversite)" class="btn btn-danger">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="universites.length === 0">
+      <p>Aucune université disponible.</p>
+    </div>
+  </div>
+  
