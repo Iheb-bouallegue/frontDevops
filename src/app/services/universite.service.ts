@@ -7,7 +7,7 @@ import { Universite } from '../models/universite';
   providedIn: 'root'
 })
 export class UniversiteService {
-  private apiUrl = 'http://localhost:8089/tpfoyer/universite';
+  private apiUrl = 'http://192.168.50.4:8089/tpfoyer/universite';
   constructor(private http: HttpClient) { }
   getUniversites(): Observable<Universite[]> {
     return this.http.get<Universite[]>(`${this.apiUrl}/retrieve-all-universites`);
