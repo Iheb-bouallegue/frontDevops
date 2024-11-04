@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'universites', component: UniversiteListComponent },
   { path: 'ajouter-universite', component: UniversiteAddComponent },
   { path: 'update-universite/:id', component: UpdateUniversiteComponentComponent },
-  { path: '', redirectTo: '/universites', pathMatch: 'full' }, // Redirection par défaut
+  { path: '', redirectTo: '/ajouter-universite', pathMatch: 'full' }, // Redirection par défaut
   { path: '**', redirectTo: '/universites' } // Gestion des chemins non définis
 ];
 
