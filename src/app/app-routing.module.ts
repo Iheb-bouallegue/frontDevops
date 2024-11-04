@@ -6,7 +6,7 @@ import {  UpdateUniversiteComponentComponent } from './components/update-univers
 
 const routes: Routes = [
   { path: '/universites', component: UniversiteListComponent },
-  { path: '/ajouter-universite', component: UniversiteAddComponent },
+  { path: 'ajouter-universite', component: UniversiteAddComponent },
   { path: '/update-universite/:id', component: UpdateUniversiteComponentComponent },
   { path: '', redirectTo: '/ajouter-universite', pathMatch: 'full' }, // Redirection par défaut
  
