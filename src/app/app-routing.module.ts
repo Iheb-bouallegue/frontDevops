@@ -5,11 +5,11 @@ import { UniversiteAddComponent } from './components/universite-add/universite-a
 import {  UpdateUniversiteComponentComponent } from './components/update-universite-component/update-universite-component.component';
 
 const routes: Routes = [
-  { path: 'universites', component: UniversiteListComponent },
-  { path: 'ajouter-universite', component: UniversiteAddComponent },
-  { path: 'update-universite/:id', component: UpdateUniversiteComponentComponent },
+  { path: '/universites', component: UniversiteListComponent },
+  { path: '/ajouter-universite', component: UniversiteAddComponent },
+  { path: '/update-universite/:id', component: UpdateUniversiteComponentComponent },
   { path: '', redirectTo: '/ajouter-universite', pathMatch: 'full' }, // Redirection par défaut
-  { path: '**', redirectTo: '/universites' } // Gestion des chemins non définis
+ 
 ];
 
 @NgModule({
