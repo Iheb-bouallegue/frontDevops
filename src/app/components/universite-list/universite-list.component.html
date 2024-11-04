@@ -27,4 +27,14 @@
       <p>Aucune université disponible.</p>
     </div>
   </div>
+  <h2>Ajouter une Université</h2>
+  <form (ngSubmit)="onSubmit()">
+    <label for="nomUniversite">Nom:</label>
+    <input type="text" id="nomUniversite" [(ngModel)]="universite.nomUniversite" name="nomUniversite" required />
+  
+    <label for="adresse">Adresse:</label>
+    <input type="text" id="adresse" [(ngModel)]="universite.adresse" name="adresse" required />
+  
+    <button type="submit">Ajouter</button>
+  </form>
   

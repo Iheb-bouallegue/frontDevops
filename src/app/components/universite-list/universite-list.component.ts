@@ -12,6 +12,12 @@ import { UniversiteService } from 'src/app/services/universite.service';
   styleUrls: ['./universite-list.component.css']
 })
 export class UniversiteListComponent implements OnInit {
+  universite: Universite = {
+    idUniversite: null, // Si nécessaire, sinon omettez-le
+    nomUniversite: '',
+    adresse: '',
+    foyer: null // Ajustez selon le modèle
+  };
   universites: Universite[] = [];
   constructor(private universiteService: UniversiteService, private router: Router) {}
   ngOnInit(): void {
@@ -36,5 +42,15 @@ export class UniversiteListComponent implements OnInit {
     // Redirige vers un formulaire de mise à jour
     this.router.navigate(['/update-universite', universite.idUniversite]);
   }
-
+  onSubmit(): void {
+    this.universiteService.addUniversite(this.universite).subscribe(
+      (response) => {
+        console.log('Université ajoutée:', response);
+        // Ajouter une action, comme rediriger l'utilisateur ou afficher un message de succès
+      },
+      (error) => {
+        console.error('Erreur lors de l\'ajout:', error);
+      }
+    );
+  }
 }
